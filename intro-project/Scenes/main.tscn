@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ed1fymnre48j"]
+
+[ext_resource type="PackedScene" uid="uid://bdhdy5p553nyf" path="res://Scenes/greetings_label.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://2f5knaepjq27" path="res://Scenes/player.tscn" id="2_bo1nx"]
+
+[node name="Main" type="Node2D"]
+
+[node name="GreetingsLabel" parent="." instance=ExtResource("1_jjgbg")]
+offset_left = 437.99997
+offset_right = 529.0
+
+[node name="GreetingsLabel2" parent="." instance=ExtResource("1_jjgbg")]
+text = "Godot is Great!"
+
+[node name="Player" parent="." instance=ExtResource("2_bo1nx")]
+position = Vector2(236.00002, 328)
