@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bv7ki8bbmdifa"]
+[gd_scene load_steps=44 format=3 uid="uid://bv7ki8bbmdifa"]
 
 [ext_resource type="Texture2D" uid="uid://bvvk8ge8ykhl3" path="res://assets/enimies/mushroom/MushroomDead.png" id="1_rwcr1"]
 [ext_resource type="Script" uid="uid://dngorpfm06hxb" path="res://scenes/mushoom.gd" id="1_yfu2f"]
@@ -253,17 +253,52 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ujgr"]
-radius = 11.0
-height = 24.0
+radius = 8.5
+height = 21.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfu2f"]
+size = Vector2(20, 1.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3bynw"]
+size = Vector2(2.5, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ven8k"]
+size = Vector2(2.5, 14.5)
 
 [node name="Mushoom" type="CharacterBody2D"]
 scale = Vector2(2, 2)
+collision_mask = 6
 script = ExtResource("1_yfu2f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rhsh8")
 animation = &"run"
-frame_progress = 0.43754292
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
 shape = SubResource("CapsuleShape2D_4ujgr")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(15, 7)
+target_position = Vector2(0, 14)
+collision_mask = 6
+
+[node name="DeathZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_yfu2f")
+
+[node name="HurtPlayerZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2DLeft" type="CollisionShape2D" parent="HurtPlayerZone"]
+position = Vector2(-13.25, 6.5)
+shape = SubResource("RectangleShape2D_3bynw")
+
+[node name="CollisionShape2DRight" type="CollisionShape2D" parent="HurtPlayerZone"]
+position = Vector2(13, 6.75)
+shape = SubResource("RectangleShape2D_ven8k")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="DeathZone" to="." method="_on_death_zone_body_entered"]
+[connection signal="body_entered" from="HurtPlayerZone" to="." method="_on_hurt_player_zone_body_entered"]

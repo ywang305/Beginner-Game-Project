@@ -8,7 +8,7 @@ const FRICTION = 100
 var jump_count = 0
 var is_wall_sliding = false
 var strawberry_count = 0
-var level_strawberries
+var level_strawberries # reference to level1.rd, who sets player.level_strawberries on ready
 
 func _physics_process(delta):
 	apply_gravity(delta)
@@ -24,7 +24,7 @@ func _physics_process(delta):
 	
 func complete_level():
 	if  strawberry_count == level_strawberries:
-		var checkpoint = get_tree().get_first_node_in_group("checkpoint")
+		var checkpoint = get_tree().get_first_node_in_group("CheckPoint Group")
 		checkpoint.emit_signal("trigger")
 		strawberry_count = 0
 	
